@@ -4,3 +4,125 @@ LEETCODE QUESTIONS
 2.	1. Two Sum
 3.	20. Valid Parentheses
 4.	121. Best Time to Buy and Sell Stock
+5.	33. Search in Rotated Sorted Array
+//LINEAR SEARCH APPROACH
+class Solution {
+    public int search(int[] nums, int target) {
+        int position = 0;
+        ArrayList<Integer> nlist = new ArrayList<>();
+        for(int element : nums){
+            nlist.add(element);
+            if(element == target){
+                position = nlist.indexOf(target);
+                break;
+            }else{
+                position =  -1;
+            }
+        }
+        return position;
+    }
+}
+
+(Better Approach is Binary Search)
+
+
+6.	141. Linked List Cycle
+Another method is accessed linked list indexes and check for repeat in index. (Better Approach is Hare & Tortoise Algo or Floyd Warshall Algo) => tortoise goes one step, hare goes step+1, they meet at one point if it is linked list since it is circular at some point.
+
+7.	9. Palindrome Number
+8.	74. Search a 2D Matrix
+9.	217. Contains Duplicate
+10.	725. Split Linked List in Parts
+
+11.	92. Reverse Linked List II
+   4 -> 8 -> 15 -> 16 -> 23 -> 42 -> null
+Suppose we have to reverse from 15 to 23.
+1st create a dummy node in the beginning. So it becomes 
+dummy -> 4 -> 8 -> 15 -> 16 -> 23 -> 42 -> null
+dummy nodes next node is head. Leftpre = dummy and currentNode = head
+Now we need a marker for the point to you want to reverse. It will be 1 number before so 8. For this we are using for loop and left-1 (i.e. value of left given-1). Leftpre will be one node before the left (ie. 8) and currentNode will be 15. Sublisthead = currentNode
+In next for loop reversing takes place
+4 -> 8 -> 15 <- 16 <- 23 <- 42 -> null     (here flow read code and draw to understand)
+	  |-> null
+Now we need to join it. So leftpre next will be prenode and sublisthead next will be current node
+
+12.	15. 3Sum
+1st condition check if length of array is less than 3 or not. If true return empty arraylist. 
+Then sort the given array. 
+The logic : 
+-4	-1	-1	0	1	2	5	8	9	10
+
+We fix the 1st number -4.
+Then left value will be -1 (i.e. i+1)
+Right value will be 10 (i.e. nums.length-1)
+If left is greater than right, sum will be 1st number (-4) + left (-1) + right (10)
+If sum is 0 add to the ArrayList. Then left will be incremented and right will be decremented.
+If sum is less than 0 it means number is small (in minus) so left will increment
+Else right will decrement( as the only possibility is that sum>0)
+Continue the process for all numbers in ArrayList.
+13.	88. Merge Sorted Array
+Suppose Array a = [1,2,3] , b = [2,5,7] 
+Consider i as integer pointing to the last element of array a
+And j is integer pointing to the last element of array b
+K = i+j (so total length of array)
+If a[i]>b[j] so that means last element of a is greater than last element of b. so it becomes the last element i.e. a[k]. then we decrement k and i
+Similarly a[i]<b[j] then b[j] becomes last element and we decrement k and j.
+Continue till I or j becomes 0. Once one of them becomes 0 add them to the array normally and decrement.
+
+14.	125. Valid Palindrome
+Convert all alphabets to lowercase. Then create another string where we check whether it contains digits and letters. Now loop only for half a length and check whether starting character is equal to I character (charAt).
+
+15.	2455. Average Value of Even Numbers That Are Divisible by Three   (Accenture)
+As number is even (divisible by 2) and divisible by 3 so it is divisible by 6. Hence modulus of 6 is 0 count the numbers and take average
+
+16.	118. Pascal's Triangle
+  Row1 is 1;
+Hence we start for loop with i=1 as we skip row1.
+The previous rows (i)+(i-1) = next row i i.e 
+point 3 (3) + point 2 (3) = point 3 (6) (of next row). So here I is 3.
+ We are considering it to be list of lists.
+
+
+17.	2. Add Two Numbers
+18.	377. Combination Sum IV
+ 
+
+19.	1359. Count All Valid Pickup and Delivery Options
+
+Pickup[i] should be before Delivery[i]. 
+
+ 
+
+For the odd number => 2*i-1
+Then for permutation = odd*(odd+1)/2
+We had to remove the mod so hence
+Dp[i] = (dp[i-1]*permutation)%mod => (mod value removed before)
+
+20.	242. Valid Anagram
+ 
+
+We create a alphabet bucket. Add all the letters in the word. 1st word letters +1 and 2nd letter word will be -1. So total should be 0 to be an anagram.
+ANAGRAM IS WHEN A WORD REARANGED TO BE ANOTHER WORD OR PHRASE.
+
+for(int count : alpha){
+    if(count == 0) return true;
+}
+return false;
+This code checks if there is any count in the alpha array that is equal to zero and immediately returns true if it finds one. This is not the correct logic for checking if two strings are anagrams because it only checks if there is at least one letter in the alphabet with a count of zero. Anagrams require that all letters have the same frequency.
+To correctly determine if s and t are anagrams, you should stick with the original code you provided:
+for(int count : alpha){
+    if(count != 0) return false;
+}
+return true;
+
+21.	26. Remove Duplicates from Sorted Array
+Q. why is j not equal to 0
+In the provided code, the variable `j` is used to keep track of the position where unique elements are being placed in the `nums` array, and it is initialized to 1. The reason `j` is initialized to 1 instead of 0 is to handle the case where the input array `nums` is empty or has only one element.
+If `j` were initialized to 0, and the input array `nums` were empty or had only one element, the code would have an issue. Here's why:
+1. If `nums` is empty (has length 0), then the loop `for(int i=0; i<nums.length-1; i++)` would not execute at all because `nums.length-1` would be -1, and the condition `i<nums.length-1` would never be true.
+2. If `nums` has only one element, the loop would execute with `i` equal to 0, but there would be no need to check for duplicates or update the array because there are no duplicate elements. However, if `j` were initialized to 0, it would indicate that the first element is a unique element, which is not accurate.
+By initializing `j` to 1, the code correctly handles these edge cases. If `nums` is empty or has only one element, the function returns `j` as 1, indicating that there is one unique element in the array (which is true). In all other cases, `j` keeps track of the position where unique elements are placed in the array, and it is incremented only when a new unique element is encountered.
+•	length() is used with strings to get the number of characters in the string.
+•	length (without parentheses) is used with arrays to get the number of elements in the array.
+
+
