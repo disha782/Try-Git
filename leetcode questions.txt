@@ -5,29 +5,8 @@ LEETCODE QUESTIONS
 3.	20. Valid Parentheses
 4.	121. Best Time to Buy and Sell Stock
 5.	33. Search in Rotated Sorted Array
-//LINEAR SEARCH APPROACH
-class Solution {
-    public int search(int[] nums, int target) {
-        int position = 0;
-        ArrayList<Integer> nlist = new ArrayList<>();
-        for(int element : nums){
-            nlist.add(element);
-            if(element == target){
-                position = nlist.indexOf(target);
-                break;
-            }else{
-                position =  -1;
-            }
-        }
-        return position;
-    }
-}
-
-(Better Approach is Binary Search)
-
 
 6.	141. Linked List Cycle
-Another method is accessed linked list indexes and check for repeat in index. (Better Approach is Hare & Tortoise Algo or Floyd Warshall Algo) => tortoise goes one step, hare goes step+1, they meet at one point if it is linked list since it is circular at some point.
 
 7.	9. Palindrome Number
 8.	74. Search a 2D Matrix
